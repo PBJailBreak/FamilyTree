@@ -21,6 +21,11 @@ namespace Core.Entities
                 this.IncomingRelations = new List<Relation>();
             }
 
+            if (parent == null)
+            {
+                throw new Exception("Parent cannot be null.");
+            }
+
             this.IncomingRelations.Add(
                     new Relation
                     {
@@ -34,20 +39,15 @@ namespace Core.Entities
 
         public bool HasParent(Person parent)
         {
-            this.CheckIfIncomingRelationsAreLoaded();
+            if (this.IncomingRelations == null)
+            {
+                throw new Exception("Incoming relations are not loaded!");
+            }
 
             return this.IncomingRelations.Any(r =>
                 r.PersonFromId == parent.Id &&
                 r.RelationTypeId == RelationTypeEnum.Child
             );
-        }
-
-        public void CheckIfIncomingRelationsAreLoaded()
-        {
-            if (this.IncomingRelations == null)
-            {
-                throw new Exception("Incoming relations are not loaded!");
-            }
         }
 
         public void Update(DTOs.Person personDto)
