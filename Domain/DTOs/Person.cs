@@ -8,11 +8,11 @@ namespace Core.DTOs
         public int Id { get; set; }
         [Required]
         [MinLength(2)]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Only letters are allowed.")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Only letters are allowed.")]
         public string Name { get; set; }
         [Required]
         [MinLength(2)]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Only letters are allowed.")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Only letters are allowed.")]
         public string Surname { get; set; }
         public int Age { get; set; }
 

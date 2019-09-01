@@ -55,7 +55,7 @@ namespace Infrastructure.Services
             else
             {
                 var child = await repository.GetAsync(x => x.Id == childDto.Id, x => x.Include(p => p.IncomingRelations))
-                    ?? throw new EntityNotFoundException($"Child with id: {parentId} was not found.");
+                    ?? throw new EntityNotFoundException($"Child with id: {childDto.Id} was not found.");
 
                 child.Update(childDto);
 

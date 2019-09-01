@@ -110,6 +110,8 @@ namespace FamilyTree
             );
             services.AddHangfireServer();
 
+            GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 0 });
+
             return services;
         }
 

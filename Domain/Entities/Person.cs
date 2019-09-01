@@ -16,7 +16,10 @@ namespace Core.Entities
 
         public Person AddParent(Person parent)
         {
-            this.CheckIfIncomingRelationsAreLoaded();
+            if (this.IncomingRelations == null)
+            {
+                this.IncomingRelations = new List<Relation>();
+            }
 
             this.IncomingRelations.Add(
                     new Relation
