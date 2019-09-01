@@ -35,9 +35,9 @@ namespace FamilyTree
                     options.UseSqlServer(configuration.GetConnectionString("FamilyTreeDbContext"))
                 )
                 .AddMemoryCache()
-                .ConfigureDataAcess()
-                .ConfigureDomainServices()
-                .ConfigureHangFire(configuration)
+                .AddDataAcess()
+                .AddDomainServices()
+                .AddHangFire(configuration)
                 .AddSwaggerGen(options =>
                     {
                         options.SwaggerDoc("v1", new Info { Title = "Family tree API", Version = "v1" });
@@ -67,7 +67,7 @@ namespace FamilyTree
 
             app
                 .UseHangfireDashboard()
-                .ConfigureCustomExceptionHandler()
+                .UseCustomExceptionHandler()
                 .UseHttpsRedirection()
                 .UseMvc()
                 .UseSwagger()
@@ -101,7 +101,7 @@ namespace FamilyTree
             }
         }
 
-        public static IServiceCollection ConfigureHangFire(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddHangFire(this IServiceCollection services, IConfiguration configuration)
         {
             EnsureHangFireDatabaseIsPresent(configuration);
 
@@ -115,14 +115,14 @@ namespace FamilyTree
             return services;
         }
 
-        public static IApplicationBuilder ConfigureCustomExceptionHandler(this IApplicationBuilder app)
+        public static IApplicationBuilder UseCustomExceptionHandler(this IApplicationBuilder app)
         {
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             return app;
         }
 
-        public static IServiceCollection ConfigureDomainServices(this IServiceCollection services)
+        public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
             services.AddHttpClient<IAgeService, AgeService>();
             services.AddScoped<IPeopleService, PeopleService>();
@@ -131,7 +131,7 @@ namespace FamilyTree
             return services;
         }
 
-        public static IServiceCollection ConfigureDataAcess(this IServiceCollection services)
+        public static IServiceCollection AddDataAcess(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
